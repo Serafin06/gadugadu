@@ -12,7 +12,7 @@ public class SerwerG {
     // The client socket.
     private static Socket clientSocket = null;
     // This chat server can accept up to maxClientsCount clients' connections.
-    private static final int maxClientsCount = 10;
+    private static final int maxClientsCount = 5;
     private static final clientThread[] threads = new clientThread[maxClientsCount];
 
     public static void main(String args[]) {

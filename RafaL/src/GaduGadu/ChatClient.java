@@ -16,7 +16,7 @@ public class ChatClient {
     String serverAddress;
     Scanner in;
     PrintWriter out;
-    JFrame frame = new JFrame("Chatter");
+    JFrame frame = new JFrame("Gadu-GaduNew");
     JTextField textField = new JTextField(50);
     JTextArea messageArea = new JTextArea(16, 50);
     public ChatClient(String serverAddress) {
@@ -39,6 +39,7 @@ public class ChatClient {
                 frame,
                 "Choose a screen name:",
                 "Screen name selection",
+                // tutaj zastrzerzenie!
                 JOptionPane.PLAIN_MESSAGE
         );
     }
@@ -53,6 +54,7 @@ public class ChatClient {
                     messageArea.append(line.substring(5) + "\n");
                 }else if (line.startsWith("SUBMITNAME")) {
                     out.println(getName());
+                    //alb tu sprawdzamy
                 } else if (line.startsWith("NAMEACCEPTED")) {
                     messageArea.append(line.substring(13) + "\n");
                     textField.setEditable(true);

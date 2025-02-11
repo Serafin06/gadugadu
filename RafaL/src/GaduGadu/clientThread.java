@@ -27,8 +27,10 @@ public class clientThread extends Thread {
             is=new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
             os = new PrintStream(clientSocket.getOutputStream());
             os.println("SUBMITNAME");
+
+            // albo tu prwdzamy imie
             String name = is.readLine().trim();
-            os.println("NAMEACCEPTED Hello " + name + " to our chat room. To leave enter QUIT");
+            os.println("NAMEACCEPTED Hello " + name + " to our chat room. To leave enter EXIT");
             for (int i = 0; i < maxClientsCount; i++) {
                 if (threads[i] != null && threads[i] != this) {
                     threads[i].os.println("MESSAGE *** A new user " + name + " entered the chat room!!! ***");
@@ -36,9 +38,13 @@ public class clientThread extends Thread {
             }
             while (true) {
                 String line = is.readLine();
-                if (line.startsWith("QUIT")) {
+                if (line.startsWith("EXIT")) {
                     break;
                 }
+                if (line.startsWith("/<name>")){
+                    // tutaj na temat wyslania wiadomosci do uzytkownika
+                }
+
                 for (int i = 0; i < maxClientsCount; i++) {
                     if (threads[i] != null) {
                         threads[i].os.println("MESSAGE <" + name + ">" + line);

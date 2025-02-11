@@ -4,30 +4,49 @@ import java.io.*;
 import java.net.*;
 
 public class Klient {
-    public static final int PORT=50010;
-    public static final String HOST = "192.168.27.3";
+    public static final int PORT = 50010;
+    public static final String HOST = "192.168.0.111";
 
-    public static void main(String[] args) throws IOException
-    {
+    public static void main(String[] args) throws IOException {
         //nawiazanie polaczenia z serwerem
         Socket sock;
-        sock=new Socket(HOST,PORT);
-        System.out.println("Nawiazalem polaczenie: "+sock);
+        sock = new Socket(HOST, PORT);
+        System.out.println("Nawiazalem polaczenie: " + sock);
 
-        //tworzenie strumieni danych pobieranych z klawiatury i dostarczanych do socketu
         BufferedReader klaw;
-        klaw=new BufferedReader(new InputStreamReader(System.in));
+        klaw = new BufferedReader(new InputStreamReader(System.in));
         PrintWriter outp;
-        outp=new PrintWriter(sock.getOutputStream());
+        outp = new PrintWriter(sock.getOutputStream());
+        boolean war = true;
+        BufferedReader inp;
+        inp = new BufferedReader(new InputStreamReader(sock.getInputStream()));
 
-        //komunikacja - czytanie danych z klawiatury i przekazywanie ich do strumienia
-        System.out.print("<Wysylamy:> ");
-        String str=klaw.readLine();
-        outp.println(str);
-        outp.flush();
+        while (war) {
+
+            String str;
+
+            System.out.print("<Wysylamy:> ");
+            str = klaw.readLine();
+            outp.println(str);
+            outp.flush();
+            if (str.equals("/0")) {
+                war = false;
+                System.out.println("<Odebrano:> zamykam");
+            }
+
+            str = inp.readLine();
+            if (str.equals("/0")) {
+                war = false;
+                System.out.println("<Odebrano:> zamykam");
+            }
+            System.out.println("<Odebrano:> " + str);
+
+
+        }
 
         System.out.println("Kończę działanie klienta");
-        //zamykanie polaczenia
+
+        inp.close();
         klaw.close();
         outp.close();
         sock.close();

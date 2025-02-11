@@ -22,23 +22,22 @@ public class Serwer {
         inp = new BufferedReader(new InputStreamReader(sock.getInputStream()));
 
         BufferedReader klaw;
-        klaw=new BufferedReader(new InputStreamReader(System.in));
+        klaw = new BufferedReader(new InputStreamReader(System.in));
         PrintWriter outp;
-        outp=new PrintWriter(sock.getOutputStream());
+        outp = new PrintWriter(sock.getOutputStream());
 
         //tworzenie strumienia dganych pobieranych z gniazda sieciowego
-        while(war) {
+        while (war) {
 
-            //komunikacja - czytanie danych ze strumienia
             String str;
             str = inp.readLine();
-            if (str.equals("/0")){
+            if (str.equals("/0")) {
                 war = false;
             }
             System.out.println("<Odebrano:> " + str);
 
             System.out.print("<Wysylamy:> ");
-            str=klaw.readLine();
+            str = klaw.readLine();
             outp.println(str);
             outp.flush();
 
@@ -46,7 +45,6 @@ public class Serwer {
 
         System.out.println("Kończę działanie serwera");
 
-        //zamykanie polaczenia
         klaw.close();
         inp.close();
         sock.close();
